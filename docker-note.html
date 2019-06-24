@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Docker Note</title>
+</head>
+<body>
 
+	<dt>docker images</dt>
+		<dd>
+			look at the container image it pulled from Docker Hub
+		</dd>
+	</dt>
+	<dt>docker ps -a</dt>
+		<dd>
+			look at the both previous and current running containers
+		</dd>
+	</dt>
+	<dt>Dockerfile</dt>
+		<dd>
+			This file instructs the Docker daemon on how to build your image. Spend some time reviewing the <a href="https://docs.docker.com/engine/reference/builder/">
+			Dockerfile reference
+		    </a> command references to understand each line of the Dockerfile.
+		</dd>
+	</dt>
+	<dt>docker build -t node-app:0.1 .</dt>
+		<dd>
+			Build the docker image ( DockerFile). Run this in the current dir where the DockerFile lives.  
+		</dd>
+	</dt>
+	<dt>docker images
+		<dd>
+			look at the container image it pulled from Docker Hub
+		</dd>
+	</dt>
+		<dt>docker run -p 4000:80 --name my-app node-app:0.1</dt>
+		<dd>
+			 Run containers based on the image you built. The --name flag allows you to name the container if you like. The -p instructs Docker to map the host's port 4000 to the container's port 80. Now you can reach the server at http://localhost:4000. Without port mapping, you would not be able to reach the container at localhost. 
+		</dd>
+	
+		<dt>docker stop my-app && docker rm my-app</dt>
+		<dd>
+			stop and remove the container:
+		</dd>
+			<dt>docker logs -f [container_id]</dt>
+		<dd>
+			You can look at the logs of a container using docker logs [container_id]. If you want to follow the log's output as the container is running, use the -f option.
+		</dd>
+				<dt>docker exec -it [container_id] bash</dt>
+		<dd>
+			Start an interactive Bash session inside the running container. You can use docker exec to do this. Open another terminal (in Cloud Shell, click the + icon) and enter the following command:
+		</dd>
+	
+	<dt>push your image to the Google Container Registry (gcr). </dt>
+		<dd>
+			To push images to your private registry hosted by gcr, you need to tag the images with a registry name. The format is [hostname]/[project-id]/[image]:[tag].
+			<p>
+			docker tag node-app:0.2 gcr.io/[project-id]/node-app:0.2
+			<p>
+			You can find your project ID by running: gcloud config list project
+			<p>
+				Tag the image and the docker images ==> 
+				docker tag node-app:0.2 gcr.io/[project-id]/node-app:0.2
+			<p>
+				docker push gcr.io/[project-id]/node-app:0.2
+
+			<p>
+				Check it http://gcr.io/[project-id]/node-app
+			<p>
+				Remove all containers <br>
+				docker stop $(docker ps -q)
+				docker rm $(docker ps -aq)
+			<p>
+				Pull and run image <br>
+				docker pull gcr.io/[project-id]/node-app:0.2
+docker run -p 4000:80 -d gcr.io/[project-id]/node-app:0.2
+curl http://localhost:4000
+
+		</dd>
+
+
+
+
+	<ol>
+
+		<li>
+			<a href="https://docs.docker.com/engine/reference/commandline/exec/">Docker exec reference</a>
+		</li>
+		<li><a href="https://docs.docker.com/engine/reference/commandline/inspect/#examples">Docker inspect reference</a></li>
+
+		<li>
+		<a href="https://docs.docker.com/config/daemon/">Troubleshooting Docker Daemon </a>
+	</li>
+		<li>
+			<a href="https://docs.docker.com/engine/reference/builder/">
+			Dockerfile reference
+		    </a>
+		</li>
+	
+		<li>
+		<a href="https://cloud.google.com/container-registry/docs/">Google Container Registry </a>
+	</li>
+	</ol>
+	
+</body>
+</html>
